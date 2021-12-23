@@ -169,3 +169,155 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+# Kill processes on port number
+# https://github.com/jurre/driveby
+function driveby() {
+  lsof -i tcp:$1 | awk 'NR!=1 {print $2}' | xargs kill
+  printf "Killed everything on port $1\n"
+}
+
+## Some picture conversions
+
+function 16mraw() {
+  destination="${PWD/pictures/pictures\/16m}"
+  mkdir -p "$destination"
+  find . -type f -name "${1}" -exec sh -c '
+    for file do
+      echo "$file"
+      mogrify -monitor -path "${destination}" -resize 16000000@\> -filter Triangle -define filter:support=2 -quality 92 -format "jpg" "$file"
+      exiftool -overwrite_original -tagsfromfile "$file" "${destination}/${file/CR2/jpg}"
+    done
+  ' sh {} +
+}
+
+function smartresize() {
+   mogrify -path $3 -monitor -filter Triangle -define filter:support=2 -thumbnail $2 -unsharp 0.25x0.08+8.3+0.045 -dither None -posterize 136 -quality 82 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB $1
+}
+
+# crop file.jpg width height postfix gravity
+function crop() {
+  if [ -z "$4" ]
+  then
+    postfix=$2;
+  else
+    postfix=$4;
+  fi
+  if [ -z "$5" ]
+  then
+    gravity="center";
+  else
+    gravity=$5;
+  fi
+  filename="${1%.*}-${postfix}.jpg";
+
+  convert "$1" -resize "${2}x${3}^" -gravity $gravity -crop $2x$3+0+0 +repage -quality 75 "$filename";
+  echo "created $filename with gravity $gravity";
+}
+
+function homebox() {
+  crop "$1" 510 286 homebox $2;
+}
+
+function homeslide() {
+  crop $1 1920 823 homeslide $2;
+}
+
+function par100() {
+  crop $1 534 150 p100% $2;
+}
+
+function par166() {
+  crop $1 166 130 p166 $2;
+}
+
+function newsletter() {
+  convert $1 -scale 1160 -quality 75 -filter Triangle -define filter:support=2 -unsharp 0.25x0.08+8.3+0.045 -dither None -posterize 136 "${1%.*}-1160.jpg"
+}
+
+# example:
+# > convert-audio '*.flac' alac m4a
+function convert-audio() {
+  mkdir -p $3;
+  for file in $1; do ffmpeg -i "$file" -c:a $2 $3/"$file".$3; done;
+}
+
+# example:
+# > convert-video '*.mp4'
+function convert-video() {
+  mkdir -p 'hevc';
+
+  find . -type f -name "${1}" -exec sh -c '
+    for file do
+      echo "$file"
+      ffmpeg -i "$file" -c:v libx265 -c:a copy "hevc/${file}";
+    done
+  ' sh {} +
+}
+
+function strip-audio() {
+  ffmpeg -i "$1" -map 0:a -c:a copy "${1//\.mp4/}.m4a"
+}
+
+# Combine audio with picture to upload translated Dharmatalks
+function yt-trans() {
+  ffmpeg -loop 1 -framerate 2 -i maxresdefault.jpg -i $1 -s 1280x720 -c:v libx265 -preset ultrafast -c:a copy -shortest "${1%.*}.mkv";
+}
+
+# Encode for upload to YouTube
+function yt() {
+  ffmpeg -i "$1" -c:v libx265 -crf 23 -c:a copy -movflags +faststart -pix_fmt yuv420p "${1%.*}-yt.mp4"
+}
+
+function convert-screencast() {
+  ffmpeg -i "$1" -c:v libx265 -c:a copy -r 24 -s 1920x1080 "${1%.*}.mp4";
+  afconvert -f m4af -d aac -c 1 --mix -s 2 -b 16000 -v "$1" "${1%.*}.m4a";
+}
+
+# Play number of random chants and sleep. Example:
+# > lullaby 3
+function lullaby() {
+  sudo ~/Music/lull $1 chant
+}
+
+# Play great ball chant playlist and sleep.
+function greatbell() {
+  sudo ~/Music/lull greatbell
+}
+
+# Play a random total relaxation and sleep.
+function relax() {
+  sudo ~/Music/lull 1 relaxation
+}
+
+# for cleaning up registration forms html files
+function cleanform() {
+  #remove id's
+  sed -i 's/ id="\w*"//g' $1
+
+  #input tags on new line
+  sed -i 's/><input/>\n<input/g' $1
+
+  #label opening and closing on new line
+  sed -i 's/><label/>\n<label/g' $1
+  sed -i 's/label></label>\n</g' $1
+
+  # list item closing on new line
+  sed -i 's/><\/li/>\n<\/li/g' $1
+
+  # remove paragraph tags
+  sed -i 's/<p>//g' $1
+  sed -i 's/<\/p>//g' $1
+
+  # convert lists to paragraphs
+  sed -i 's/<ul>//g' $1
+  sed -i 's/<\/ul>//g' $1
+  sed -i 's/<li/<p/g' $1
+  sed -i 's/<\/li>/<\/p>/g' $1
+}
+
+function splitpdf() {
+    filename="${1%.*}-extract.pdf"
+    gs -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$filename" -dFirstPage=$2 -dLastPage=$3 -sDEVICE=pdfwrite "$1"
+    echo "saved as $filename";
+}
