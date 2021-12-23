@@ -1,10 +1,8 @@
-# Mathias’s dotfiles
+# Duc Pho's dotfiles
 
-![Screenshot of my shell prompt](https://i.imgur.com/EkEtphC.png)
+Forked from [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles). Added some of my own quirks to save in case I need to set up somewhere else.
 
-## Installation
-
-**Warning:** If you want to give these dotfiles a try, you should first fork this repository, review the code, and remove things you don’t want or need. Don’t blindly use my settings unless you know what that entails. Use at your own risk!
+You probably want to fork the original repository, review the code, and remove things you don’t want or need. Don’t blindly use settings unless you know what that entails. Use at your own risk!
 
 ### Using Git and the bootstrap script
 
@@ -83,18 +81,11 @@ When setting up a new Mac, you may want to install some common [Homebrew](https:
 
 Some of the functionality of these dotfiles depends on formulae installed by `brew.sh`. If you don’t plan to run `brew.sh`, you should look carefully through the script and manually install any particularly important ones. A good example is Bash/Git completion: the dotfiles use a special version from Homebrew.
 
-## Feedback
 
-Suggestions/improvements
-[welcome](https://github.com/mathiasbynens/dotfiles/issues)!
-
-## Author
-
+## Thanks to…
 | [![twitter/mathias](http://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70)](http://twitter.com/mathias "Follow @mathias on Twitter") |
 |---|
 | [Mathias Bynens](https://mathiasbynens.be/) |
-
-## Thanks to…
 
 * @ptb and [his _macOS Setup_ repository](https://github.com/ptb/mac-setup)
 * [Ben Alman](http://benalman.com/) and his [dotfiles repository](https://github.com/cowboy/dotfiles)

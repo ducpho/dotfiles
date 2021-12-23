@@ -9,7 +9,7 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # Shortcuts
-alias d="cd ~/Documents/Dropbox"
+alias d="cd ~/Documents"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/projects"
@@ -25,7 +25,7 @@ else # macOS `ls`
 fi
 
 # List all files colorized in long format
-alias l="ls -lF ${colorflag}"
+alias l="ls -hlF ${colorflag}"
 
 # List all files colorized in long format, excluding . and ..
 alias la="ls -lAF ${colorflag}"
@@ -53,7 +53,7 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 
 # Google Chrome
 alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
-alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
+alias firefox='/Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox'
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -146,3 +146,28 @@ alias reload="exec ${SHELL} -l"
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
+
+# tag photo's, not really using these anymore...
+alias geo-uh='exiftool -P -overwrite_original -progress -GPSLatitude="44.744146" -GPSLatitudeRef="44.744146"  -GPSLongitude="0.342169" -GPSLongitudeRef="0.342169"  *.JPG'
+alias geo-lh='exiftool -P -overwrite_original -progress -GPSLatitude="44.734144" -GPSLatitudeRef="44.734144"  -GPSLongitude="0.318754" -GPSLongitudeRef="0.318754"  *.JPG'
+alias geo-nh='exiftool -P -overwrite_original -progress -GPSLatitude="44.674962" -GPSLatitudeRef="44.674962"  -GPSLongitude="0.122441" -GPSLongitudeRef="0.122441"  *.JPG'
+alias geo-sh='exiftool -P -overwrite_original -progress -GPSLatitude="44.737209" -GPSLatitudeRef="44.737209"  -GPSLongitude="0.345704" -GPSLongitudeRef="0.345704"  *.JPG'
+alias img-time='exiftool -progress "-filemodifydate<datetimeoriginal" *.JPG'
+alias vid-time='exiftool -progress "-filemodifydate<mediacreatedate" *.MOV'
+alias 1920='mkdir -p 1920 && mogrify -monitor List -path 1920 -resize 1920 -quality 85'
+
+# resize photos
+alias homeboxes='mkdir -p "${PWD##*/}-home"; mogrify -monitor -path "${PWD##*/}-home" -resize "510x286^" -gravity center -crop 510x286+0+0 +repage -quality 85';
+
+# resize photos to 16 megapixels for upload to Google Photos on slow internet
+alias 16m='mkdir -p "${PWD/pictures/pictures\/16m}" && mogrify -monitor -path "${PWD/pictures/pictures\/16m}" -resize 16000000@\> -filter Triangle -define filter:support=2 -quality 92 -format "jpg" '
+
+# stop Docker containers
+alias dockstop='docker stop $(docker ps -a -q)'
+
+# Disable/enable notification center
+alias disableNotificationCenter="launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist && killall NotificationCenter"
+alias enableNotificationCenter="launchctl load -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist && open /System/Library/CoreServices/NotificationCenter.app/"
+
+# Show how much space directories in the current path take up
+alias space="du -h -d 1 | sort -h"
