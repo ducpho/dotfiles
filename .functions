@@ -316,6 +316,14 @@ function cleanform() {
   sed -i 's/<\/li>/<\/p>/g' $1
 }
 
+# Update local copy of Tu Dien Lang Mai and do some replaces afterwards because httrack doesn't consider srcset attributes
+function tudien() {
+    httrack https://langmai.org/tang-kinh-cac/tu-dien-lang-mai/ --mirrorlinks -r2 -d -langmai.org/* +langmai.org/tang-kinh-cac/tu-dien-lang-mai/* +langmai.org/wp-content/* +langmai.org/wp-includes/* --continue
+    sed -i 's/https:\/\/langmai.org\/wp-content/..\/..\/..\/wp-content/' langmai.org/tang-kinh-cac/*/*/*.html
+    sed -i 's/.jpeg/.jpg/' langmai.org/tang-kinh-cac/*/*/*.html
+}
+
+# Usage: `splitpdf input.pdf 6 10`
 function splitpdf() {
     filename="${1%.*}-extract.pdf"
     gs -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$filename" -dFirstPage=$2 -dLastPage=$3 -sDEVICE=pdfwrite "$1"
