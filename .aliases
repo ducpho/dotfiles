@@ -171,3 +171,5 @@ alias enableNotificationCenter="launchctl load -w /System/Library/LaunchAgents/c
 
 # Show how much space directories in the current path take up
 alias space="du -h -d 1 | sort -h"
+
+alias functions="{ alias && declare -F; }"
