@@ -15,6 +15,9 @@
 	# Pull in remote changes for the current repository and all its submodules.
 	p = pull --recurse-submodules
 
+    # Pull in remote changes for the current repository and all its submodules.
+	pr = pull --rebase --recurse-submodules
+
 	# Clone a repository including all submodules.
 	c = clone --recursive
 
