@@ -20,7 +20,7 @@ module.exports = {
         hideIcon: true,
     },
     handlers: [{
-            match: finicky.matchHostnames(["drive.google.com", "docs.google.com"]),
+        match: finicky.matchHostnames(/\w.google.com/),
             browser: "Google Chrome"
         },
         {
