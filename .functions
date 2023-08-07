@@ -323,9 +323,25 @@ function tudien() {
     sed -i 's/.jpeg/.jpg/' langmai.org/tang-kinh-cac/*/*/*.html
 }
 
-# Usage: `splitpdf input.pdf 6 10`
+# Examples:
+# > splitpdf input.pdf 6 10 output.pdf
+# > splitpdf input.pdf 6 10
+# > splitpdf input.pdf 6
 function splitpdf() {
-    filename="${1%.*}-extract.pdf"
-    gs -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$filename" -dFirstPage=$2 -dLastPage=$3 -sDEVICE=pdfwrite "$1"
+    if [ -z "$3" ]
+    then
+        lastpage=$2;
+    else
+        lastpage=$3;
+    fi
+
+    if [ -z "$4" ]
+    then
+        filename="${1%.*}-extract.pdf"
+    else
+        filename=$4;
+    fi
+
+    gs -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$filename" -dFirstPage=$2 -dLastPage=$lastpage -sDEVICE=pdfwrite "$1"
     echo "saved as $filename";
 }
