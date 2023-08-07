@@ -51,10 +51,6 @@ alias week='date +%V'
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
 
-# Google Chrome
-alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
-alias firefox='/Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox'
-
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
@@ -173,3 +169,9 @@ alias enableNotificationCenter="launchctl load -w /System/Library/LaunchAgents/c
 alias space="du -h -d 1 | sort -h"
 
 alias functions="{ alias && declare -F; }"
+
+# Application shortcuts
+alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+alias firefox='/Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox'
+alias epubcheck="java -jar /Applications/epubcheck/epubcheck.jar"
+alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
