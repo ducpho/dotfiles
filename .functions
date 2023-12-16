@@ -345,3 +345,25 @@ function splitpdf() {
     gs -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$filename" -dFirstPage=$2 -dLastPage=$lastpage -sDEVICE=pdfwrite "$1"
     echo "saved as $filename";
 }
+
+
+# Fix framerate issues with downloaded videos
+# from https://www.reddit.com/r/ffmpeg/comments/md20lb/comment/i7qtt3c/
+# > fixfr input.mp4
+function fixfr()  {
+    local frames=$(ffprobe -v 0 -of csv=p=0 -select_streams v:0 -show_entries stream=nb_frames -i "$1") && \
+    local duration=$(ffprobe -v 0 -of csv=p=0 -select_streams a:0 -show_entries stream=duration -i "$1") && \
+    local fps=$(echo "$frames"/"$duration" | bc -l | awk '{printf("%d\n",$1 + 0.5)}') && \
+
+    filename="${1%.*}-fixed.m4v" && \
+
+    ffmpeg -y -i "$1" -c copy bad.mkv && \
+    mkvextract bad.mkv tracks 0:stream.avc && \
+    mkvmerge -o good.mkv --default-duration 0:${fps}p --fix-bitstream-timing-information 0:1 stream.avc -D bad.mkv && \
+    ffmpeg -y -i good.mkv -c copy "$filename" && \
+    rm stream.avc && \
+    rm bad.mkv && \
+    rm good.mkv && \
+    rm "$1" && \
+    echo "saved as $filename";
+}
