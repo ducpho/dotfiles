@@ -41,13 +41,12 @@ brew install wget --with-iri
 # Install more recent versions of some macOS tools.
 brew install vim --with-override-system-vi
 brew install grep
-brew install openssh
 brew install screen
 # brew install php
 brew install gmp
 
 # Install a version manager for programming languages
-brew install asdf
+# brew install asdf
 
 # Install font tools.
 brew tap bramstein/webfonttools
@@ -62,7 +61,7 @@ brew install git
 # brew install git-lfs
 brew install gs
 brew install imagemagick --with-webp
-brew install lua
+# brew install lua
 # brew install lynx
 # brew install p7zip
 # brew install pigz
@@ -73,6 +72,16 @@ brew install lua
 # brew install tree
 # brew install vbindiff
 # brew install zopfli
+brew install fzf
+
+brew tap homebrew-ffmpeg/ffmpeg
+brew install homebrew-ffmpeg/ffmpeg/ffmpeg --with-fdk-aac --with-srt --with-webp
+
+brew install --cask iterm2
+brew install --cask keepassxc
+brew install --cask firefox
+brew install --cask orbstack
+brew install --cask alfred
 
 # Remove outdated versions from the cellar.
 brew cleanup
