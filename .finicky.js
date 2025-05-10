@@ -15,7 +15,7 @@ const googleDriveApp = {
 
 module.exports = {
     // defaultBrowser: "Firefox Developer Edition",
-    defaultBrowser: "Firefox",
+    defaultBrowser: "Safari",
     // Hide the finicky icon from the top bar. Default: false
     options: {
         hideIcon: true,

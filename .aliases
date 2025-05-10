@@ -171,9 +171,9 @@ alias space="du -h -d 1 | sort -h"
 alias functions="{ alias && declare -F; }"
 
 # Application shortcuts
-alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
-alias firefox='/Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox'
+alias chrome='/Applications/Browsers/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+alias firefox='/Applications/Browsers/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox'
 alias epubcheck="java -jar /Applications/epubcheck/epubcheck.jar"
-alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+alias subl="/Applications/Development/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 alias cursor="/Applications/Development/Cursor.app/Contents/MacOS/Cursor"
 alias code="/Applications/Development/Cursor.app/Contents/MacOS/Cursor"
