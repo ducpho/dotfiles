@@ -13,7 +13,7 @@ const googleDriveApp = {
     }),
 }
 
-module.exports = {
+export default {
     // defaultBrowser: "Firefox Developer Edition",
     defaultBrowser: "Safari",
     // Hide the finicky icon from the top bar. Default: false
@@ -31,7 +31,7 @@ module.exports = {
         {
             match: [
                 "zoom.us/*",
-                finicky.matchDomains(/.*\zoom.us/),
+                finicky.matchHostnames(/.*\zoom.us/),
                 /zoom.us\/j\//,
             ],
             browser: "us.zoom.xos"
