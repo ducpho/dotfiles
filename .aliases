@@ -177,3 +177,5 @@ alias epubcheck="java -jar /Applications/epubcheck/epubcheck.jar"
 alias subl="/Applications/Development/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 alias cursor="/Applications/Development/Cursor.app/Contents/MacOS/Cursor"
 alias code="/Applications/Development/Cursor.app/Contents/MacOS/Cursor"
+
+alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
