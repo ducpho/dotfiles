@@ -179,3 +179,5 @@ alias cursor="/Applications/Development/Cursor.app/Contents/MacOS/Cursor"
 alias code="/Applications/Development/Cursor.app/Contents/MacOS/Cursor"
 
 alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
+alias t="composer test --"
+alias td="composer test:debug --"
