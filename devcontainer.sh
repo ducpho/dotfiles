@@ -5,6 +5,7 @@ cd "$(dirname "${BASH_SOURCE}")";
 git pull origin main;
 
 function doIt() {
+	curl https://raw.githubusercontent.com/git/git/v2.43.0/contrib/completion/git-completion.bash -o ~/.git-completion.bash
 	cp .* ~;
 	source ~/.bash_profile;
 }
