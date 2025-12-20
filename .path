@@ -1,1 +1,2 @@
 export PATH="$HOME/Library/Application Support/Herd/bin:$PATH";
+export PATH="/usr/local/opt/libpq/bin:$PATH";
