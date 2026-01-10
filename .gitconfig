@@ -30,7 +30,10 @@
 	# Switch to a branch, creating it if necessary.
 	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 
-
+	# prune branches that have already been merged with main.
+	prune = "fetch --prune"
+	prune-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	prune-remote = "!f() { git fetch origin; default=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | cut -d' ' -f5 || echo 'main'); if git show-ref --verify --quiet refs/remotes/origin/$default; then git branch -r --merged origin/$default | grep -vE \"origin/($default|HEAD)\" | sed \"s/origin\\///\" | xargs -n 1 git push origin --delete; else echo \"Error: origin/$default does not exist\"; fi; }; f"
 
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
@@ -85,6 +88,9 @@
 	sort = -committerdate
 
 [core]
+
+	# Set nano as the default editor for git.
+	editor = nano
 
 	# Use custom `.gitignore` and `.gitattributes`.
 	excludesfile = ~/.gitignore
