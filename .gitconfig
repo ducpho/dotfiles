@@ -30,10 +30,21 @@
 	# Switch to a branch, creating it if necessary.
 	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 
-	# prune branches that have already been merged with main.
-	prune = "fetch --prune"
-	prune-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-	prune-remote = "!f() { git fetch origin; default=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | cut -d' ' -f5 || echo 'main'); if git show-ref --verify --quiet refs/remotes/origin/$default; then git branch -r --merged origin/$default | grep -vE \"origin/($default|HEAD)\" | sed \"s/origin\\///\" | xargs -n 1 git push origin --delete; else echo \"Error: origin/$default does not exist\"; fi; }; f"
+	# Prune all merged branches (local and remote), protecting main/master/production/staging.
+	prune = "!f() { \
+		echo 'Fetching and pruning stale remote tracking refs...'; \
+		git fetch --prune; \
+		default=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | cut -d' ' -f5 || echo 'main'); \
+		echo 'Deleting local merged branches...'; \
+		git branch --merged | grep -vE '^\\*|^\\s*(main|master|production|staging)$' | xargs -n 1 git branch -d 2>/dev/null || true; \
+		if git show-ref --verify --quiet refs/remotes/origin/$default; then \
+			echo \"Deleting remote merged branches on origin...\"; \
+			git branch -r --merged origin/$default | grep -vE \"origin/(HEAD|$default|production|staging)\" | sed 's/origin\\///' | xargs -n 1 git push origin --delete 2>/dev/null || true; \
+		else \
+			echo \"Warning: origin/$default does not exist, skipping remote prune\"; \
+		fi; \
+		echo 'Done!'; \
+	}; f"
 
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
@@ -69,7 +80,7 @@
 
 	# Remove branches that have already been merged with main.
 	# a.k.a. ‘delete merged’
-	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	dm = "!git branch --merged | grep -vE '^\\*|^\\s*(main|master|production|staging)$' | xargs -n 1 git branch -d"
 
 	# List contributors with number of commits.
 	contributors = shortlog --summary --numbered
