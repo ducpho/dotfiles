@@ -79,3 +79,6 @@ export HERD_PHP_82_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/p
 # Herd injected NVM configuration
 export NVM_DIR="$HOME/Library/Application Support/Herd/config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# uv (Python package manager)
+. "$HOME/.local/bin/env"

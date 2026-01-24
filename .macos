@@ -275,7 +275,7 @@ defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
 # Finder: show hidden files by default
-#defaults write com.apple.finder AppleShowAllFiles -bool true
+defaults write com.apple.finder AppleShowAllFiles -bool true
 
 # Finder: show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
@@ -375,8 +375,10 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 # Enable highlight hover effect for the grid view of a stack (Dock)
 defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
-# Set the icon size of Dock items to 36 pixels
-defaults write com.apple.dock tilesize -int 36
+# Set the icon size of Dock items to 48 pixels
+defaults write com.apple.dock tilesize -int 48
+defaults write com.apple.dock largesize -int 128
+defaults write com.apple.dock magnification -bool true
 
 # Change minimize/maximize window effect
 defaults write com.apple.dock mineffect -string "scale"
@@ -527,7 +529,7 @@ defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool fals
 # Disable AutoFill
 defaults write com.apple.Safari AutoFillFromAddressBook -bool false
 defaults write com.apple.Safari AutoFillPasswords -bool false
-defaults write com.apple.Safari AutoFillCreditCardData -bool false
+defaults write com.apple.Safari AutoFillCreditCardData -bool true
 defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
 
 # Warn about fraudulent websites
@@ -799,13 +801,13 @@ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 ###############################################################################
 
 # Disable automatic emoji substitution (i.e. use plain text smileys)
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool true
 
 # Disable smart quotes as it’s annoying for messages that contain code
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool true
 
 # Disable continuous spell checking
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool true
 
 ###############################################################################
 # Google Chrome & Google Chrome Canary                                        #
