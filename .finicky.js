@@ -35,7 +35,11 @@ export default {
                 /zoom.us\/j\//,
             ],
             browser: "us.zoom.xos"
-        }
+        },
+        {
+            match: finicky.matchDomains("open.spotify.com"),
+            browser: "Spotify"
+        },
 
     ],
     rewrite: [{

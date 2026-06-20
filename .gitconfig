@@ -31,8 +31,7 @@
 	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 
 	# Prune all merged branches (local and remote), protecting main/master/production/staging.
-	prune = "!f() { \
-		echo 'Fetching and pruning stale remote tracking refs...'; \
+	prune = "!f() { echo 'Fetching and pruning stale remote tracking refs...'; \
 		git fetch --prune; \
 		default=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | cut -d' ' -f5 || echo 'main'); \
 		echo 'Deleting local merged branches...'; \
@@ -46,6 +45,8 @@
 		echo 'Done!'; \
 	}; f"
 
+	
+
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
 	branches = branch --all
@@ -57,11 +58,14 @@
 	# Amend the currently staged files to the latest commit.
 	amend = commit --amend --no-edit
 
+    # Create a new commit that fixes up the given commit.
+	fix = commit --fixup $1
+
 	# Credit an author on the latest commit.
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 
 	# Interactive rebase with the given number of latest commits.
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	reb = "!r() { git rebase -i --autosquash HEAD~$1; }; r"
 
 	# Remove the old tag with this name and tag the latest commit with it.
 	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
@@ -202,6 +206,9 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+
+[rebase]
+	autoSquash = true
 
 [init]
 
