@@ -367,3 +367,10 @@ function fixfr()  {
     rm "$1" && \
     echo "saved as $filename";
 }
+
+# Quick switch to a git worktree
+gw() {
+  local dir
+  dir=$(git worktree list | fzf --height 40% --reverse | awk '{print $1}')
+  [ -n "$dir" ] && cd "$dir" && code .
+}
